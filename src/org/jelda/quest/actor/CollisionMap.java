@@ -34,14 +34,26 @@ public class CollisionMap {
 			}
 		}
 	}
-	public CollisionMap(Sprite image, boolean autoGenerateMapFromImage) {
+	public CollisionMap(Sprite image) {
 		BufferedImage spriteImage = image.sprite;
-		collisionMap = new boolean[spriteImage.getWidth()][spriteImage.getHeight()];
-		setSolid();
-		if (autoGenerateMapFromImage) {
-			isFull = false;
-			isEmpty = false;
+		int width = spriteImage.getWidth(), height = spriteImage.getHeight(), backgroundColor = spriteImage.getRGB(0, height -1);
+		collisionMap = new boolean[width][height];
+		isEmpty = isFull = false;
+		floodFillGenerate(spriteImage, 0, height-1, collisionMap);
+		if (spriteImage.getRGB(0, 0) == backgroundColor)
 			floodFillGenerate(spriteImage, 0, 0, collisionMap);
+		if (spriteImage.getRGB(width -1, 0) == backgroundColor)
+			floodFillGenerate(spriteImage, width-1, 0, collisionMap);
+		if (spriteImage.getRGB(width-1, height-1) == backgroundColor)
+			floodFillGenerate(spriteImage, width-1, height-1, collisionMap);
+	}
+	public CollisionMap(Sprite image, boolean passable) {
+		collisionMap = new boolean[image.getWidth()][image.getHeight()];
+		if (passable) {
+			setClear();
+		}
+		else {
+			setSolid();
 		}
 	}
 	private void fillArray(boolean value) {

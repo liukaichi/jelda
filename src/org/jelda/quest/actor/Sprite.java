@@ -43,10 +43,16 @@ public class Sprite {
 			}
 		}
 	}
-	public void loadSprite(Sprite other) {
+	public void loadSprite(Sprite other) { //TODO copy sprite
 		sprite = other.sprite;
 	}
 	public BufferedImage getSubImage(int x, int y, int width, int height) {
 		return sprite.getSubimage(x, y, width, height);
+	}
+	public int getWidth() {
+		return sprite.getWidth();
+	}
+	public int getHeight() {
+		return sprite.getHeight();
 	}
 }
