@@ -1,23 +1,35 @@
 package org.jelda.quest.map;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 import org.jelda.quest.actor.Actor;
 
 public class Tile{
-	public HashMap<Point, ArrayList<Actor>> actors;
-	public Tile() {
-		actors = new HashMap<Point, ArrayList<Actor>>();
+	public static final Comparator<Actor> actorHeightComparator = new Comparator<Actor>() {
+
+		@Override
+		public int compare(Actor o1, Actor o2) {
+			return o1.height - o2.height;
+		}
+	};
+	public final int width, height;
+	public HashMap<Point, PriorityQueue<Actor>> actors;
+	public Tile(int width, int height) {
+		this(new HashMap<Point, PriorityQueue<Actor>>(), width, height);
 	}
-	public Tile(HashMap<Point, ArrayList<Actor>> actors) {
+	public Tile(HashMap<Point, PriorityQueue<Actor>> actors, int width, int height) {
 		this.actors = actors;
+		this.width = width;
+		this.height = height;
 	}
 	public void addActorAt(Point point, Actor actor) {
-		ArrayList<Actor> actorList = actors.get(point);
+		PriorityQueue<Actor> actorList = actors.get(point);
 		if (actorList == null) {
-			actorList = new ArrayList<Actor>();
+			actorList = new PriorityQueue<Actor>(11,actorHeightComparator);
 			actorList.add(actor);
 			actors.put(point, actorList);
 		}
@@ -25,17 +37,29 @@ public class Tile{
 			actorList.add(actor);
 		}
 	}
-	public void addActorsAt(Point point, ArrayList<Actor> actorList) {
-		ArrayList<Actor> currentActors = actors.get(point);
+	public void addActorsAt(Point point, PriorityQueue<Actor> actorList) {
+		PriorityQueue<Actor> currentActors = actors.get(point);
 		if (currentActors == null) {
-			actors.put(point, actorList);
+			PriorityQueue<Actor> sortedActorList = new PriorityQueue<Actor>(11,actorHeightComparator);
+			sortedActorList.addAll(actorList);
+			actors.put(point, sortedActorList);
 		}
 		else {
 			currentActors.addAll(actorList);
 		}
 	}
-	public ArrayList<Actor> getActorsAt(Point point) {
+	public PriorityQueue<Actor> getActorsAtAsPriorityQueueByHeight(Point point) {
 		return actors.get(point);
 	}
+	public Collection<Actor> getActorsAt(Point point) {
+		return actors.get(point);
+	}
+	public Collection<Actor> getActorsAt(Coordinate point) {
+		return actors.get(point.getPixelCoordinates());
+	}
+	public PriorityQueue<Actor> getActorsAtAsPriorityQueueByHeight(Coordinate point) {
+		return actors.get(point.getPixelCoordinates());
+	}
+	
 
 }

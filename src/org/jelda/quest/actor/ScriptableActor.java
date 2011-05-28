@@ -6,9 +6,9 @@ import org.jelda.quest.scriptable.Scriptable;
 
 public abstract class ScriptableActor extends Actor implements Scriptable{
 
-	public ScriptableActor(Sprite defaultSprite, Coordinate globalLocation,
-			CollisionMap collisionMap, boolean isVisible, boolean isPersistent) {
-		super(defaultSprite, globalLocation, collisionMap, isVisible, isPersistent);
+	public ScriptableActor(Sprite defaultSprite, Coordinate location,
+			CollisionMap collisionMap, int height, boolean isVisible, boolean isPersistent) {
+		super(defaultSprite, location, collisionMap, height, isVisible, isPersistent);
 		// TODO Auto-generated constructor stub
 	}
 	

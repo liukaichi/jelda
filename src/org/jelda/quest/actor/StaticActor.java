@@ -7,20 +7,20 @@ import org.jelda.quest.map.Coordinate;
 
 
 public abstract class StaticActor extends Actor {
-	public StaticActor(Sprite defaultSprite, Coordinate globalCoordinates) {
-		this(defaultSprite, globalCoordinates, new CollisionMap(defaultSprite, false), true, false);
+	public StaticActor(Sprite defaultSprite, Coordinate location) {
+		this(defaultSprite, location, new CollisionMap(defaultSprite, false), Actor.ACTOR_HEIGHT_DEFAULT, true, false);
 	}
-	public StaticActor(Sprite defaultSprite, Coordinate globalCoordinates, boolean passable) {
-		this(defaultSprite, globalCoordinates, new CollisionMap(defaultSprite, !passable), true, false);
+	public StaticActor(Sprite defaultSprite, Coordinate location, boolean passable) {
+		this(defaultSprite, location, new CollisionMap(defaultSprite, !passable), Actor.ACTOR_HEIGHT_DEFAULT, true, false);
 	}
-	public StaticActor(Sprite defaultSprite, Coordinate globalCoordinates, CollisionMap collisionMap) {
-		this(defaultSprite, globalCoordinates, collisionMap, true, false);
+	public StaticActor(Sprite defaultSprite, Coordinate location, CollisionMap collisionMap) {
+		this(defaultSprite, location, collisionMap, Actor.ACTOR_HEIGHT_DEFAULT, true, false);
 	}
-	public StaticActor(Sprite defaultSprite, Coordinate globalCoordinates, CollisionMap collisionMap, boolean isVisible) {
-		this(defaultSprite, globalCoordinates, collisionMap, isVisible, false);
+	public StaticActor(Sprite defaultSprite, Coordinate location, CollisionMap collisionMap, boolean isVisible) {
+		this(defaultSprite, location, collisionMap, Actor.ACTOR_HEIGHT_DEFAULT, isVisible, false);
 	}
-	public StaticActor(Sprite defaultSprite, Coordinate globalCoordinates, CollisionMap collisionMap, boolean isVisible, boolean isPersistent) {
-		super(defaultSprite,globalCoordinates,collisionMap,isVisible, isPersistent);
+	public StaticActor(Sprite defaultSprite, Coordinate location, CollisionMap collisionMap, int height, boolean isVisible, boolean isPersistent) {
+		super(defaultSprite,location,collisionMap,height, isVisible, isPersistent);
 	}
 	@Override
 	public void paint(Graphics2D canvas, Rectangle viewWindow) {

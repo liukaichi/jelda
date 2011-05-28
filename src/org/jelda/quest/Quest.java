@@ -3,11 +3,8 @@ package org.jelda.quest;
 import org.jelda.quest.map.World;
 
 public class Quest {
-	World world;
-	public Quest() {
-		world = new World();
-	}
+	public static World world;
 	public Quest(World world) {
-		this.world = world;
+		Quest.world = world;
 	}
 }

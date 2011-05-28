@@ -7,6 +7,8 @@ import org.jelda.quest.map.Coordinate;
 
 
 public abstract class Actor {
+	public static final int ACTOR_HEIGHT_DEFAULT = 0, ACTOR_HEIGHT_HIGH = 100, ACTOR_HEIGHT_LOW = -100;
+	public int height;
 	public Coordinate location;
 	public boolean isVisible;
 	public final boolean isPersistent;
@@ -15,10 +17,11 @@ public abstract class Actor {
 	
 	public abstract void paint(Graphics2D canvas, Rectangle viewWindow);
 		
-	public Actor(Sprite defaultSprite, Coordinate globalLocation, CollisionMap collisionMap, boolean isVisible, boolean isPersistent) {
+	public Actor(Sprite defaultSprite, Coordinate location, CollisionMap collisionMap, int height, boolean isVisible, boolean isPersistent) {
 		this.currentSprite = defaultSprite;
-		this.location = globalLocation;
+		this.location = location;
 		this.collisionMap = collisionMap;
+		this.height = height;
 		this.isVisible = isVisible;
 		this.isPersistent = isPersistent;
 	}
@@ -29,11 +32,12 @@ public abstract class Actor {
 		this.isPersistent = other.isPersistent;
 		this.currentSprite = other.currentSprite;
 		this.collisionMap = other.collisionMap;
+		this.height = other.height;
 	}
-	public int getWidth() {
+	public int getSpriteWidth() {
 		return currentSprite.getWidth();
 	}
-	public int getHeight() {
+	public int getSpriteHeight() {
 		return currentSprite.getHeight();
 	}
 }
