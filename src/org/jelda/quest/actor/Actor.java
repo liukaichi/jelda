@@ -3,12 +3,13 @@ package org.jelda.quest.actor;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import org.jelda.quest.map.Coordinate;
+import org.jelda.quest.Quest;
+import org.jelda.quest.world.Coordinate;
 
 
 public abstract class Actor {
 	public static final int ACTOR_HEIGHT_DEFAULT = 0, ACTOR_HEIGHT_HIGH = 100, ACTOR_HEIGHT_LOW = -100;
-	public int height;
+	private int height;
 	public Coordinate location;
 	public boolean isVisible;
 	public final boolean isPersistent;
@@ -40,4 +41,16 @@ public abstract class Actor {
 	public int getSpriteHeight() {
 		return currentSprite.getHeight();
 	}
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public void translatePixels(int dx, int dy) {
+		Quest.world.getActorsAtAsPriorityQueueByHeight(location);
+		
+	}
+	
 }
