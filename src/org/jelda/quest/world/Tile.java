@@ -2,6 +2,7 @@ package org.jelda.quest.world;
 
 import java.awt.Point;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -19,14 +20,22 @@ public class Tile{
 	};
 	public final int width, height;
 	public HashMap<Point, PriorityQueue<Actor>> actors;
+	public ArrayList<Actor> persistentActors;
 	public Tile() {
-		this( World.DEFAULT_TILE_WIDTH, World.DEFAULT_TILE_HEGHT);
+		this( new HashMap<Point, PriorityQueue<Actor>>(), new ArrayList<Actor>(), World.DEFAULT_TILE_WIDTH, World.DEFAULT_TILE_HEGHT);
 	}
 	public Tile(int width, int height) {
-		this(new HashMap<Point, PriorityQueue<Actor>>(), width, height);
+		this(new HashMap<Point, PriorityQueue<Actor>>(), new ArrayList<Actor>(), width, height);
 	}
 	public Tile(HashMap<Point, PriorityQueue<Actor>> actors, int width, int height) {
+		this(actors, new ArrayList<Actor>(), width, height);
+	}
+	public Tile(ArrayList<Actor> persistentActors, int width, int height) {
+		this(new HashMap<Point, PriorityQueue<Actor>>(), persistentActors, width, height);
+	}
+	public Tile(HashMap<Point, PriorityQueue<Actor>> actors, ArrayList<Actor> persistentActors,int width, int height) {
 		this.actors = actors;
+		this.persistentActors = persistentActors;
 		this.width = width;
 		this.height = height;
 	}
@@ -47,6 +56,9 @@ public class Tile{
 	public void addActorAt(Point point, Actor actor) {
 		checkBounds(point);
 		PriorityQueue<Actor> actorList = actors.get(point);
+		if (actor.isPersistent) {
+			persistentActors.add(actor);
+		}
 		if (actorList == null) {
 			actorList = new PriorityQueue<Actor>(11,actorHeightComparator);
 			actorList.add(actor);
