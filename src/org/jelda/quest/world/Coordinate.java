@@ -37,11 +37,11 @@ public class Coordinate {
 			Point tileCoordinates, Point pixelCoordinates) {
 		if (mapCoordinates != null) {
 			this.mapCoordinates = new Point(mapCoordinates);
-			if (tileSetCoordinates != null) {
+			if (tileSetCoordinates != null && isValid(tileSetCoordinates)) {
 				this.tileSetCoordinates = new Point(tileSetCoordinates);
-				if (tileCoordinates != null) {
+				if (tileCoordinates != null&& isValid(tileCoordinates)) {
 					this.tileCoordinates = new Point(tileCoordinates);
-					if (pixelCoordinates != null) {
+					if (pixelCoordinates != null && isValid(pixelCoordinates)) {
 						this.pixelCoordinates = new Point(pixelCoordinates);
 					}
 				}

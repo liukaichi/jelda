@@ -56,7 +56,7 @@ public class Tile{
 			actorList.add(actor);
 		}
 	}
-	public void addActorsAt(Point point, PriorityQueue<Actor> actorList) {
+	public void addActorsAt(Point point, Collection<Actor> actorList) {
 		checkBounds(point);
 		PriorityQueue<Actor> currentActors = actors.get(point);
 		if (currentActors == null) {
