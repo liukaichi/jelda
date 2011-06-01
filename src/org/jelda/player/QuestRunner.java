@@ -10,44 +10,45 @@ import java.io.File;
 import org.jelda.quest.Quest;
 
 /**
- *
+ * 
  * @author Blaise
  */
 public class QuestRunner {
-    private boolean isRunning = false;
-    public Quest quest;
-    public Graphics graphics;
+	private boolean isRunning = false;
+	public Quest quest;
+	public transient Graphics graphics;
 
-    public QuestRunner(File file, Graphics graphics) {
-	this(loadQuestFromFile(file), graphics);
-    }
-    public QuestRunner(Quest quest, Graphics graphics) {
-	this.quest = quest;
-	this.graphics = graphics;
-	load();
-    }
+	public QuestRunner(File file, Graphics graphics) {
+		this(loadQuestFromFile(file), graphics);
+	}
 
-    public void start() {
-	//TODO
-	isRunning = true;
-    }
+	public QuestRunner(Quest quest, Graphics graphics) {
+		this.quest = quest;
+		this.graphics = graphics;
+		load();
+	}
 
-    private void load() {
-	//TODO
-    }
+	public void start() {
+		// TODO
+		isRunning = true;
+	}
 
-    public void stop() {
-	//TODO
-	isRunning = false;
-    }
+	private void load() {
+		// TODO
+	}
 
-    public boolean isRunning() {
-	return isRunning;
-    }
+	public void stop() {
+		// TODO
+		isRunning = false;
+	}
 
-    public static Quest loadQuestFromFile(File file) {
-	//TODO
-	return null;
-    }
+	public boolean isRunning() {
+		return isRunning;
+	}
+
+	public static Quest loadQuestFromFile(File file) {
+		// TODO
+		return null;
+	}
 
 }
