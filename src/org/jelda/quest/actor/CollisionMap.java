@@ -8,17 +8,33 @@ import java.util.LinkedList;
 
 public class CollisionMap {
 
-	public boolean[][] collisionMap;
-	public boolean isFull = false, isEmpty = false;
+	public boolean[][] getCollisionMap() {
+		return collisionMap;
+	}
+
+	public void setCollisionMap(boolean[][] otherCollisionMap) {
+		this.collisionMap = otherCollisionMap;
+	}
+
+	public boolean isFull() {
+		return isFull;
+	}
+
+	public boolean isEmpty() {
+		return isEmpty;
+	}
+
+	protected boolean[][] collisionMap;
+	protected boolean isFull = false, isEmpty = false;
 
 	/*
 	 * isFull: if true, then the entire collisionMap is true, meaning that it is
-	 * completly solid and impassable.isEmpty: if true, then the entire
+	 * completely solid and impassable.isEmpty: if true, then the entire
 	 * collisionMap is false, meaning that this map is empty and anything can
 	 * pass through it.IMPORTANT NOTE: it is possible for both isFull and
 	 * isEmpty to be false, and the collisionMap to be either empty or full. In
-	 * otherwords, just becauseisEmpty and isFull are both false, there is no
-	 * gaurantee of any particular state.
+	 * other words, just becauseisEmpty and isFull are both false, there is no
+	 * guarantee of any particular state.
 	 */
 	public CollisionMap(int width, int height, boolean defaultValue) {
 		collisionMap = new boolean[width][height];
@@ -26,20 +42,7 @@ public class CollisionMap {
 	}
 
 	public CollisionMap(boolean[][] otherCollisionMap) {
-		isFull = true;
-		isEmpty = true;
-		this.collisionMap = new boolean[otherCollisionMap.length][otherCollisionMap[0].length];
-		for (int i = 0; i < otherCollisionMap.length; i++) {
-			for (int j = 0; j < otherCollisionMap[i].length; j++) {
-				boolean value = otherCollisionMap[i][j];
-				if (value) {
-					isEmpty = false;
-				} else {
-					isFull = false;
-				}
-				this.collisionMap[i][j] = value;
-			}
-		}
+		setCollisionMap(otherCollisionMap);
 	}
 
 	public CollisionMap(Sprite image) {

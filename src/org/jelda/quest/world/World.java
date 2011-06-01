@@ -1,117 +1,90 @@
 package org.jelda.quest.world;
 
 import java.awt.Point;
-import java.security.InvalidParameterException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import org.jelda.quest.actor.Actor;
 
 public class World {
-	public static final int DEFAULT_WORLD_WIDTH = 1, DEFAULT_WORLD_HEGHT = 1;
-	public static final int DEFAULT_MAP_WIDTH = 32, DEFAULT_MAP_HEGHT = 32;
-	public static final int DEFAULT_TILESET_WIDTH = 16,
-			DEFAULT_TILESET_HEGHT = 16;
-	public static final int DEFAULT_TILE_WIDTH = 32, DEFAULT_TILE_HEGHT = 32;
-	public final int width, height;
-	public HashMap<Point, Map> maps;
+	public static final Comparator<Actor> actorHeightComparator = new Comparator<Actor>() {
+
+		@Override
+		public int compare(Actor o1, Actor o2) {
+			return o1.getPriority() - o2.getPriority();
+		}
+	};
+	private HashMap<Point, PriorityQueue<Actor>> actors;
 
 	public World() {
-		this(DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEGHT);
+		this(null);
 	}
 
-	public World(int width, int height) {
-		this(new HashMap<Point, Map>(), width, height);
+	public World(Collection<Actor> actors) {
+		this.actors = new HashMap<Point, PriorityQueue<Actor>>();
+		addActors(actors);
 	}
 
-	public World(HashMap<Point, Map> maps, int width, int height) {
-		this.maps = maps;
-		this.width = width;
-		this.height = height;
-	}
-
-	public void checkBounds(Point point) {
-		if (point.x >= width) {
-			throw new InvalidParameterException(
-					"Trying to add outside map. point.x cannot be >= width");
-		} else if (point.y >= height) {
-			throw new InvalidParameterException(
-					"Tring to add outside map. point.y cannot be >= height");
-		} else if (point.x < 0) {
-			throw new InvalidParameterException(
-					"Tring to add outside map. point.x cannot be < 0");
+	public static void boundsAreValid(Point point) { //TODO WHY YOU THROW EXCEPTION LIKE LITTLE GIRL
+		if (point == null) {
+			throw new IllegalArgumentException("point cannot be null");
+		}
+		if (point.x < 0) {
+			throw new IllegalArgumentException(
+					"Tring to add outside map. X cannot be < 0");
 		} else if (point.y < 0) {
-			throw new InvalidParameterException(
-					"Tring to add outside map. point.y cannot be < 0");
+			throw new IllegalArgumentException(
+					"Tring to add outside map. Y cannot be < 0");
 		}
 	}
 
-	public void addMapAt(Point point, Map map) {
-		checkBounds(point);
-		maps.put(point, map);
+	public void addActorAt(Point point, Actor actor) {
+		actor.setLocation(point);
+		addActor(actor);
 	}
 
-	public Map getMapAt(Point point) {
-		return maps.get(point);
-	}
-
-	public Map getMapAt(Coordinate point) {
-		return maps.get(point.getMapCoordinates());
-	}
-
-	public PriorityQueue<Actor> getActorsAtAsPriorityQueueByHeight(
-			Coordinate coordinates) {
-		if (!coordinates.hasAllCoordinates()) {
-			return null;
-		} else {
-			try {
-				return getMapAt(coordinates.getMapCoordinates())
-						.getTileSetAt(coordinates.getTileSetCoordinates())
-						.getTileAt(coordinates.getTileCoordinates())
-						.getActorsAtAsPriorityQueueByHeight(
-								coordinates.getPixelCoordinates());
-			} catch (Exception e) {
-				return null;
+	public void addActor(Actor actor) {
+		if (actor != null) {
+			Point point = actor.getLocation();
+			boundsAreValid(point);
+			PriorityQueue<Actor> actorList = actors.get(point);
+			if (actorList == null) {
+				actorList = new PriorityQueue<Actor>(11, actorHeightComparator);
+				actorList.add(actor);
+				actors.put(point, actorList);
+			} else {
+				actorList.add(actor);
 			}
 		}
 	}
 
-	public Tile getTileAt(Coordinate coordinates) {
-		try {
-			return getMapAt(coordinates.getMapCoordinates()).getTileSetAt(
-					coordinates.getTileSetCoordinates()).getTileAt(
-					coordinates.getTileCoordinates());
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	public TileSet getTileSetAt(Coordinate coordinates) {
-		if (!coordinates.hasAllCoordinates()) {
-			return null;
-		} else {
-			try {
-				return getMapAt(coordinates.getMapCoordinates()).getTileSetAt(
-						coordinates.getTileSetCoordinates());
-			} catch (Exception e) {
-				return null;
+	public void addActors(Collection<Actor> actorList) {
+		if (actorList != null) {
+			for (Actor actor : actorList) {
+				addActor(actor);
 			}
 		}
 	}
 
-	public Collection<Actor> getActorsAt(Coordinate coordinates) {
-		if (!coordinates.hasAllCoordinates()) {
-			return null;
-		} else {
-			try {
-				return getMapAt(coordinates.getMapCoordinates())
-						.getTileSetAt(coordinates.getTileSetCoordinates())
-						.getTileAt(coordinates.getTileCoordinates())
-						.getActorsAt(coordinates.getPixelCoordinates());
-			} catch (Exception e) {
-				return null;
+	public void addActorsAt(Point point, Collection<Actor> actorList) {
+		if (actorList != null) {
+			for (Actor actor : actorList) {
+				addActorAt(point, actor);
 			}
 		}
+	}
+
+	public Collection<Actor> getActorsAt(Point point) {
+		return actors.get(point);
+	}
+	
+	public boolean removeActor(Actor actor) {
+		return actors.get(actor.getLocation()).remove(actor);
+	}
+	
+	public boolean removActorsAt(Point point) {
+		return actors.remove(point) != null;
 	}
 }

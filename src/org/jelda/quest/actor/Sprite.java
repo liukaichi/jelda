@@ -5,15 +5,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidParameterException;
-
 import javax.imageio.ImageIO;
 
 public class Sprite {
-	public BufferedImage sprite = null;
+	protected BufferedImage sprite = null;
 
 	public Sprite(Sprite other) {
-		this(other, true);
+		this(other, false);
 	}
 	
 	public Sprite(Sprite other, boolean deepCopy) {
@@ -21,7 +19,7 @@ public class Sprite {
 			sprite = other.sprite;
 		}
 		else {
-			copySprite(other);
+			copySpriteFrom(other);
 		}
 	}
 
@@ -41,7 +39,7 @@ public class Sprite {
 	}
 
 	public Sprite(Sprite other, int x, int y, int width, int height) {
-		this(other, true);
+		this(other, false);
 		sprite = sprite.getSubimage(x, y, width, height);
 	}
 
@@ -52,7 +50,7 @@ public class Sprite {
 	public void loadSprite(String path) {
 		File filePath = new File(path);
 		if (!filePath.exists() || filePath.isDirectory()) {
-			throw new InvalidParameterException(path
+			throw new IllegalArgumentException(path
 					+ " is not a valid image file.");
 		} else {
 			try {
@@ -64,15 +62,20 @@ public class Sprite {
 		}
 	}
 
-	public void loadSprite(Sprite other) {
+	public void useSpriteFrom(Sprite other) {
 		sprite = other.sprite;
 	}
 
-	public void copySprite(Sprite other) {
+	public void copySpriteFrom(Sprite other) {
 		ColorModel cm = other.sprite.getColorModel();
 		sprite = new BufferedImage(cm, other.sprite.copyData(null), cm.isAlphaPremultiplied(), null);
 	}
 
+	public BufferedImage getNewSubImage(int x, int y, int width, int height) {
+		ColorModel cm = sprite.getColorModel();
+		return new BufferedImage(cm, sprite.copyData(null), cm.isAlphaPremultiplied(), null).getSubimage(x, y, width, height);
+	}
+	
 	public BufferedImage getSubImage(int x, int y, int width, int height) {
 		return sprite.getSubimage(x, y, width, height);
 	}
