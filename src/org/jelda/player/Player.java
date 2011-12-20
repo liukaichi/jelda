@@ -30,7 +30,7 @@ public class Player extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 745876777089865635L;
-	QuestRunner questRunner;
+//	QuestRunner questRunner;
     /** Creates new form Player */
     public Player() {
 	try {
@@ -149,19 +149,19 @@ public class Player extends javax.swing.JFrame {
 	if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    File file = loadQuestFileChooser.getSelectedFile();
 	    statusLabel.setText("Loading Quest...");
-	    questRunner = new QuestRunner(file, drawPanel.getGraphics());
+//	    questRunner = new QuestRunner(file, drawPanel.getGraphics());
 	    statusLabel.setText("Starting Quest...");
-	    questRunner.start();
+//	    questRunner.start();
 	    statusLabel.setText("Running");
 	}
     }
 
     public void stopQuest() {
-	if (questRunner != null && questRunner.isRunning()) {
+//	if (questRunner != null && questRunner.isRunning()) {
 	    statusLabel.setText("Stopping...");
-	    questRunner.stop();
+//	    questRunner.stop();
 	    statusLabel.setText("Stopped");
-	}
+//	}
     }
 
     /**
@@ -176,16 +176,16 @@ public class Player extends javax.swing.JFrame {
     }
 
     public void closeWindow() {
-	if (questRunner == null || (questRunner != null && !questRunner.isRunning()) || (questRunner != null && questRunner.isRunning() && JOptionPane.showConfirmDialog(this, "A quest is currently running. Are you sure you want to quit?") == JOptionPane.YES_OPTION)) {
+//	if (questRunner == null || (questRunner != null && !questRunner.isRunning()) || (questRunner != null && questRunner.isRunning() && JOptionPane.showConfirmDialog(this, "A quest is currently running. Are you sure you want to quit?") == JOptionPane.YES_OPTION)) {
 	    stopQuest();
 	    WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
 	    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
 	    setVisible(false);
 	    dispose();
 	    System.exit(0);
-	} else {
+//	} else {
 	    return;
-	}
+//	}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
