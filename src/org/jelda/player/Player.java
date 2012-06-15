@@ -15,8 +15,8 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
+
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
@@ -30,7 +30,7 @@ public class Player extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 745876777089865635L;
-//	QuestRunner questRunner;
+	private QuestRunner questRunner;
     /** Creates new form Player */
     public Player() {
 	try {
@@ -149,7 +149,7 @@ public class Player extends javax.swing.JFrame {
 	if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    File file = loadQuestFileChooser.getSelectedFile();
 	    statusLabel.setText("Loading Quest...");
-//	    questRunner = new QuestRunner(file, drawPanel.getGraphics());
+	    questRunner = new QuestRunner(file, drawPanel.getGraphics());
 	    statusLabel.setText("Starting Quest...");
 //	    questRunner.start();
 	    statusLabel.setText("Running");
