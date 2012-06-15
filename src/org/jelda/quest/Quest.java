@@ -1,6 +1,6 @@
 package org.jelda.quest;
 
-import org.jelda.world.World;
+import org.jelda.quest.world.World;
 
 public class Quest {
 	World world;
