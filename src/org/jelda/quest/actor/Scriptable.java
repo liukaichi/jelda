@@ -1,4 +1,4 @@
-package org.jelda.quest.scriptable;
+package org.jelda.quest.actor;
 
 /**
  * A scriptable object is one that has custom defined behavior. A scriptable object defines three methods:
