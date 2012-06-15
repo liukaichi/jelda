@@ -1,4 +1,4 @@
-package org.jelda.quest.world.scriptable;
+package org.jelda.world;
 
 public class World {
 	public World() {
