@@ -11,6 +11,7 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import org.jelda.player.Write;
+import org.jelda.quest.manifest.Manifest;
 
 public class QuestReader {
 	public static Quest loadQuest(File f) {
