@@ -1,10 +1,11 @@
 package org.jelda.quest;
 
+import org.jelda.quest.manifest.Manifest;
 import org.jelda.quest.world.World;
 
 public class Quest {
-	World world;
-	Manifest manifest;
+	private World world;
+	private Manifest manifest;
 	public Quest() {
 		world = new World();
 	}

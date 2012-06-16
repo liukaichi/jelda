@@ -1,4 +1,4 @@
-package org.jelda.quest;
+package org.jelda.quest.manifest;
 
 import java.io.File;
 import java.io.FileInputStream;
