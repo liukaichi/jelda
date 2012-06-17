@@ -10,8 +10,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import org.jelda.player.Write;
 import org.jelda.quest.manifest.Manifest;
+import org.jelda.quest.sprite.SpritePool;
 
 public class QuestReader {
 	public static Quest loadQuest(File f) {
@@ -24,8 +28,12 @@ public class QuestReader {
 				return null;
 			}
 			Quest quest = new Quest();
-			quest.setManifest(new Manifest(new File(tempFolder, "quest.manifest")));
+			quest.setQuestManifest(new Manifest(new File(tempFolder, "quest.manifest")));
 			Write.info("Loaded manifest:\n\tname "+ quest.getQuestName() + "\n\tversion " + quest.getQuestVersion() + "\n\tauthor " +quest.getQuestAuthor());
+			quest.setSpritePool(new SpritePool(new File(tempFolder, "sprites")));
+			Write.info("Indexed " + quest.getNumSprites() + " sprites: " + quest.getSpriteFilenames());
+			JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getSprite("2")));
+			
 			return quest;
 		} else {
 			Write.error(f.getAbsolutePath() + " is not a valid quest file");
@@ -179,6 +187,6 @@ public class QuestReader {
 	}
 
 	public static void main(String[] args) {
-		QuestReader.loadQuest(new File("./quests/quest.zip"));
+		QuestReader.loadQuest(new File("./quests/quests.zip"));
 	}
 }

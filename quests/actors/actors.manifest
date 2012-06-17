@@ -1,0 +1,3 @@
+number.actors = 2
+filename.list = actor1.properties, actor2.properties
+id.list = 1, 2

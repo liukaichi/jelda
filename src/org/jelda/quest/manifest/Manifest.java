@@ -10,9 +10,41 @@ import org.jelda.player.Write;
 
 public class Manifest {
 	Properties manifest;
-	public final static String QUESTNAME = "quest.name";
-	public final static String QUESTVERSION = "quest.version";
-	public final static String QUESTAUTHOR = "quest.author";
+	
+	public enum QuestManifest {
+	    QUESTVERSION("quest.version"),
+	    QUESTAUTHOR("quest.author"),
+	    QUESTNAME("quest.name")
+	    ;
+	    private QuestManifest(final String text) {
+	        this.key = text;
+	    }
+
+	    public final String key;
+
+	}
+	public enum ImageManifest {
+		NUMIMAGES("number.images"),
+		FILENAMELIST("filename.list"),
+		IDLIST("id.list");
+		
+		private ImageManifest(final String text) {
+	        this.key = text;
+	    }
+
+	    public final String key;
+	}
+	public enum ActorManifest {
+		NUMIMAGES("number.actors"),
+		FILENAMELIST("filename.list"),
+		IDLIST("id.list");
+		
+		private ActorManifest(final String text) {
+	        this.key = text;
+	    }
+
+	    public final String key;
+	}
 	
 	public Manifest(File f) {
 		manifest = new Properties();
@@ -27,15 +59,15 @@ public class Manifest {
 		}
 	}
 	
-	public String getQuestName() {
-		return manifest.getProperty(QUESTNAME);
+	public String getQuestProperty(QuestManifest property) {
+		return manifest.getProperty(property.key);
 	}
 	
-	public String getQuestVersion() {
-		return manifest.getProperty(QUESTVERSION);
+	public String getImageProperty(ImageManifest property) {
+		return manifest.getProperty(property.key);
 	}
 	
-	public String getQuestAuthor() {
-		return manifest.getProperty(QUESTAUTHOR);
+	public String getActorProperty(ActorManifest property) {
+		return manifest.getProperty(property.key);
 	}
 }
