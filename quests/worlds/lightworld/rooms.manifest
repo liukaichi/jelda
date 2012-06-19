@@ -1,3 +1,3 @@
 number.rooms = 2
-file.list = room1.xml, room2.xml
+file.list = roomba.xml, roomble.xml
 id.list = room1, room2

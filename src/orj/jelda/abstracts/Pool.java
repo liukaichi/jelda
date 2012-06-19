@@ -52,8 +52,8 @@ public abstract class Pool<V> {
 		}
 	}
 	
-	public void loadAll(Collection<String> ids, boolean pruneOld) {
-		if (pruneOld)
+	public void loadAll(Collection<String> ids, boolean pruneUnlisted) {
+		if (pruneUnlisted)
 			idToInstanceMap.keySet().retainAll(ids);
 		for (String s : ids)
 			if (!idToInstanceMap.containsKey(s)) {

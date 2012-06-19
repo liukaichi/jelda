@@ -55,4 +55,7 @@ public class Quest {
 	public void setWorldPool(WorldPool worldPool) {
 		this.worldPool = worldPool;
 	}
+	public int getNumWorlds() {
+		return worldPool.getNumWorlds();
+	}
 }
