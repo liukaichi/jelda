@@ -31,7 +31,6 @@ public class RoomPool extends Pool<Room> {
 
 	@Override
 	public Room load(String id) {
-		Write.info("loaddir:"  + loadDir + " name: " + idToFilenameMap.get(id));
 		Room room = new Room(new File(loadDir, idToFilenameMap.get(id)));
 		return room;
 	}

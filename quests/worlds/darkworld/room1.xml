@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<room>
+	<tile>
+		<xlocation>50</xlocation>
+		<ylocation>0</ylocation>
+		<zheight>0</zheight>
+		<spriteid>1</spriteid>
+	</tile>
+</room>

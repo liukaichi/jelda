@@ -1,0 +1,1 @@
+7z a -r quests.zip actors quest.manifest sprites worlds

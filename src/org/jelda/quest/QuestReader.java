@@ -10,9 +10,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import org.jelda.player.Write;
 import org.jelda.quest.manifest.Manifest;
 import org.jelda.quest.sprite.SpritePool;
@@ -33,10 +30,11 @@ public class QuestReader {
 			Write.info("Loaded manifest:\n\tname "+ quest.getQuestName() + "\n\tversion " + quest.getQuestVersion() + "\n\tauthor " +quest.getQuestAuthor());
 			quest.setSpritePool(new SpritePool(new File(tempFolder, "sprites")));
 			Write.info("Indexed " + quest.getNumSprites() + " sprites: " + quest.getSpriteFilenames());
-			JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getInstance("2")));
+			//JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getInstance("2")));
 			quest.setWorldPool(new WorldPool(new File(tempFolder, "worlds")));
-			quest.getWorldPool().load("1").getRoomPool().load("room1");
-			quest.getWorldPool().load("2").getRoomPool().load("room2");
+			Write.info("Loaded " + quest.getNumWorlds() +" worlds: " + quest.getWorldPool().getWorldFolder());
+			//Write.info(quest.getWorldPool().load("1").getRoomPool().load("room1").toString());
+			//Write.info(quest.getWorldPool().load("2").getRoomPool().load("room2").toString());
 			return quest;
 		} else {
 			Write.error(f.getAbsolutePath() + " is not a valid quest file");
