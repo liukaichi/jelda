@@ -5,12 +5,14 @@ import org.jelda.quest.manifest.Manifest;
 import org.jelda.quest.manifest.Manifest.QuestManifest;
 import org.jelda.quest.sprite.SpritePool;
 import org.jelda.quest.world.World;
+import org.jelda.quest.world.WorldPool;
 
 public class Quest {
 	private World world;
 	private Manifest questManifest;
 	private SpritePool spritePool;
 	private ActorPool actorPool;
+	private WorldPool worldPool;
 	public Quest() {
 		super();
 	}
@@ -46,5 +48,11 @@ public class Quest {
 	}
 	public void setActorPool(ActorPool actorPool) {
 		this.actorPool = actorPool;
+	}
+	public WorldPool getWorldPool() {
+		return worldPool;
+	}
+	public void setWorldPool(WorldPool worldPool) {
+		this.worldPool = worldPool;
 	}
 }
