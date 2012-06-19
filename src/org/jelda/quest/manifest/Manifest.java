@@ -37,7 +37,8 @@ public class Manifest {
 	public enum ActorManifest {
 		NUMIMAGES("number.actors"),
 		FILENAMELIST("filename.list"),
-		IDLIST("id.list");
+		IDLIST("id.list"),
+		ACTORSPRITE("actor.sprite");
 		
 		private ActorManifest(final String text) {
 	        this.key = text;
@@ -46,7 +47,39 @@ public class Manifest {
 	    public final String key;
 	}
 	
+	public enum WorldManifest {
+		NUMWORLDS("number.worlds"),
+		FOLDERLIST("folder.list"),
+		IDLIST("id.list");
+		
+		private WorldManifest(final String text) {
+	        this.key = text;
+	    }
+
+	    public final String key;
+	}
+	
+	public enum RoomManifest {
+		NUMROOMS("number.rooms"),
+		FILENAMELIST("file.list"),
+		IDLIST("id.list");
+		
+		private RoomManifest(final String text) {
+	        this.key = text;
+	    }
+
+	    public final String key;
+	}
+	
+	public Manifest() {
+		
+	}
+	
 	public Manifest(File f) {
+		load(f);
+	}
+	
+	public void load(File f) {
 		manifest = new Properties();
 		try {
 			FileInputStream in = new FileInputStream(f);
@@ -68,6 +101,14 @@ public class Manifest {
 	}
 	
 	public String getActorProperty(ActorManifest property) {
+		return manifest.getProperty(property.key);
+	}
+	
+	public String getWorldProperty(WorldManifest property) {
+		return manifest.getProperty(property.key);
+	}
+	
+	public String getRoomProperty(RoomManifest property) {
 		return manifest.getProperty(property.key);
 	}
 }

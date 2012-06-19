@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import org.jelda.player.Write;
 import org.jelda.quest.manifest.Manifest;
 import org.jelda.quest.sprite.SpritePool;
+import org.jelda.quest.world.WorldPool;
 
 public class QuestReader {
 	public static Quest loadQuest(File f) {
@@ -32,8 +33,10 @@ public class QuestReader {
 			Write.info("Loaded manifest:\n\tname "+ quest.getQuestName() + "\n\tversion " + quest.getQuestVersion() + "\n\tauthor " +quest.getQuestAuthor());
 			quest.setSpritePool(new SpritePool(new File(tempFolder, "sprites")));
 			Write.info("Indexed " + quest.getNumSprites() + " sprites: " + quest.getSpriteFilenames());
-			JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getSprite("2")));
-			
+			JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getInstance("2")));
+			quest.setWorldPool(new WorldPool(new File(tempFolder, "worlds")));
+			quest.getWorldPool().load("1").getRoomPool().load("room1");
+			quest.getWorldPool().load("2").getRoomPool().load("room2");
 			return quest;
 		} else {
 			Write.error(f.getAbsolutePath() + " is not a valid quest file");
