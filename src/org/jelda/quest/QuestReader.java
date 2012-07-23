@@ -33,8 +33,8 @@ public class QuestReader {
 			//JOptionPane.showMessageDialog(null, null, null, JOptionPane.DEFAULT_OPTION, new ImageIcon(quest.getSpritePool().getInstance("2")));
 			quest.setWorldPool(new WorldPool(new File(tempFolder, "worlds")));
 			Write.info("Loaded " + quest.getNumWorlds() +" worlds: " + quest.getWorldPool().getWorldFolder());
-			//Write.info(quest.getWorldPool().load("1").getRoomPool().load("room1").toString());
-			//Write.info(quest.getWorldPool().load("2").getRoomPool().load("room2").toString());
+			Write.info(quest.getWorldPool().getInstance("1").getRoomPool().getInstance("room1").toString());
+			Write.info(quest.getWorldPool().getInstance("2").getRoomPool().getInstance("room2").toString());
 			return quest;
 		} else {
 			Write.error(f.getAbsolutePath() + " is not a valid quest file");
@@ -188,6 +188,6 @@ public class QuestReader {
 	}
 
 	public static void main(String[] args) {
-		QuestReader.loadQuest(new File("./quests/quests.zip"));
+		QuestReader.loadQuest(new File("./quests/quests.jqst"));
 	}
 }

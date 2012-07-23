@@ -27,7 +27,7 @@ public class ActorPool extends Pool<Actor>{
 	}
 	
 	@Override
-	public Actor load(String id) {
+	protected Actor load(String id) {
 		Actor actor = new Actor(new File(loadDir, idToFilenameMap.get(id)));
 		return actor;
 	}

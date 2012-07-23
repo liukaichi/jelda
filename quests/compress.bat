@@ -1,1 +1,1 @@
-7z a -r quests.zip actors quest.manifest sprites worlds
+7z a -tzip -r quests.jqst actors quest.manifest sprites worlds

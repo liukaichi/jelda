@@ -58,4 +58,10 @@ public class Quest {
 	public int getNumWorlds() {
 		return worldPool.getNumWorlds();
 	}
+	public int getQuestWidth() {
+		return Integer.parseInt(questManifest.getQuestProperty(QuestManifest.QUESTWIDTH));
+	}
+	public int getQuestHeight() {
+		return Integer.parseInt(questManifest.getQuestProperty(QuestManifest.QUESTHEIGHT));
+	}
 }

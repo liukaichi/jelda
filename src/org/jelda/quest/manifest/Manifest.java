@@ -14,7 +14,9 @@ public class Manifest {
 	public enum QuestManifest {
 	    QUESTVERSION("quest.version"),
 	    QUESTAUTHOR("quest.author"),
-	    QUESTNAME("quest.name")
+	    QUESTNAME("quest.name"),
+	    QUESTWIDTH("quest.width"),
+	    QUESTHEIGHT("quest.height")
 	    ;
 	    private QuestManifest(final String text) {
 	        this.key = text;
@@ -50,7 +52,8 @@ public class Manifest {
 	public enum WorldManifest {
 		NUMWORLDS("number.worlds"),
 		FOLDERLIST("folder.list"),
-		IDLIST("id.list");
+		IDLIST("id.list"),
+		STARTWORLD("start.world");
 		
 		private WorldManifest(final String text) {
 	        this.key = text;
@@ -62,7 +65,8 @@ public class Manifest {
 	public enum RoomManifest {
 		NUMROOMS("number.rooms"),
 		FILENAMELIST("file.list"),
-		IDLIST("id.list");
+		IDLIST("id.list"),
+		STARTROOM("start.room");
 		
 		private RoomManifest(final String text) {
 	        this.key = text;
