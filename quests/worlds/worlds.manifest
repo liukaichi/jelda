@@ -1,3 +1,4 @@
 number.worlds = 2
 folder.list = darkworld, lightworld
 id.list = 1, 2
+start.world = lightworld

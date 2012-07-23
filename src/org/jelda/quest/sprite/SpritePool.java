@@ -33,7 +33,7 @@ public class SpritePool extends Pool<Sprite> {
 	}
 
 	@Override
-	public Sprite load(String id) {
+	protected Sprite load(String id) {
 		try {
 			Sprite sprite = new Sprite(ImageIO.read(new File(loadDir, idToFilenameMap.get(id))));
 			return sprite;

@@ -1,3 +1,5 @@
 quest.name = Test
 quest.version = 1.0
 quest.author = Test McTesterson
+quest.width = 640
+quest.height = 480

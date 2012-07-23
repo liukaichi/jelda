@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
@@ -37,6 +38,8 @@ public class Player extends javax.swing.JFrame {
 	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	} catch (Exception ex) {}
         initComponents();
+
+	loadQuestFileChooser.setCurrentDirectory(new File(".", "quests"));
     }
 
     /** This method is called from within the constructor to
@@ -49,21 +52,33 @@ public class Player extends javax.swing.JFrame {
     private void initComponents() {
 
         loadQuestFileChooser = new javax.swing.JFileChooser();
-        drawPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         staticStatusText = new javax.swing.JLabel();
         statusLabel = new javax.swing.JLabel();
+        drawPanel = new org.jelda.player.DrawPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         loadQuestMenuItem = new javax.swing.JMenuItem();
-        stopQuestMenuItem = new javax.swing.JMenuItem();
         quitMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        startMenuItem = new javax.swing.JMenuItem();
+        stopMenuItem = new javax.swing.JMenuItem();
+        pauseMenuItem = new javax.swing.JMenuItem();
+        resumeMenuItem = new javax.swing.JMenuItem();
 
         loadQuestFileChooser.setDialogTitle("Open Quest");
         loadQuestFileChooser.setFileFilter(new jqstFileFilter());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jquest Player");
+
+        jToolBar1.setFloatable(false);
+
+        staticStatusText.setText("Status:");
+        jToolBar1.add(staticStatusText);
+
+        statusLabel.setText("Not Started");
+        jToolBar1.add(statusLabel);
 
         javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
         drawPanel.setLayout(drawPanelLayout);
@@ -73,16 +88,8 @@ public class Player extends javax.swing.JFrame {
         );
         drawPanelLayout.setVerticalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 295, Short.MAX_VALUE)
         );
-
-        jToolBar1.setFloatable(false);
-
-        staticStatusText.setText("Status:");
-        jToolBar1.add(staticStatusText);
-
-        statusLabel.setText("Not Started");
-        jToolBar1.add(statusLabel);
 
         fileMenu.setText("File");
 
@@ -94,14 +101,7 @@ public class Player extends javax.swing.JFrame {
         });
         fileMenu.add(loadQuestMenuItem);
 
-        stopQuestMenuItem.setText("Stop Quest");
-        stopQuestMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopQuestMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(stopQuestMenuItem);
-
+        quitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         quitMenuItem.setText("Quit");
         quitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,20 +112,60 @@ public class Player extends javax.swing.JFrame {
 
         jMenuBar1.add(fileMenu);
 
+        jMenu1.setText("Run");
+
+        startMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        startMenuItem.setText("Start");
+        startMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(startMenuItem);
+
+        stopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        stopMenuItem.setText("Stop");
+        stopMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(stopMenuItem);
+
+        pauseMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        pauseMenuItem.setText("Pause");
+        pauseMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(pauseMenuItem);
+
+        resumeMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        resumeMenuItem.setText("Resume");
+        resumeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resumeMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(resumeMenuItem);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -136,32 +176,44 @@ public class Player extends javax.swing.JFrame {
 	loadQuest();
     }//GEN-LAST:event_loadQuestMenuItemActionPerformed
 
-    private void stopQuestMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopQuestMenuItemActionPerformed
-	stopQuest();
-    }//GEN-LAST:event_stopQuestMenuItemActionPerformed
-
     private void quitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuItemActionPerformed
 	closeWindow();
     }//GEN-LAST:event_quitMenuItemActionPerformed
+
+    private void startMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMenuItemActionPerformed
+	questRunner.start();
+    }//GEN-LAST:event_startMenuItemActionPerformed
+
+    private void resumeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeMenuItemActionPerformed
+	questRunner.unpause();
+    }//GEN-LAST:event_resumeMenuItemActionPerformed
+
+    private void pauseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseMenuItemActionPerformed
+	questRunner.pause();
+    }//GEN-LAST:event_pauseMenuItemActionPerformed
+
+    private void stopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopMenuItemActionPerformed
+	questRunner.stop();
+    }//GEN-LAST:event_stopMenuItemActionPerformed
 
     public void loadQuest() throws HeadlessException {
 	int returnVal = loadQuestFileChooser.showOpenDialog(this);
 	if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    File file = loadQuestFileChooser.getSelectedFile();
 	    statusLabel.setText("Loading Quest...");
-	    questRunner = new QuestRunner(file, drawPanel.getGraphics());
+	    questRunner = new QuestRunner(file, drawPanel);
 	    statusLabel.setText("Starting Quest...");
-//	    questRunner.start();
+	    questRunner.start();
 	    statusLabel.setText("Running");
 	}
     }
 
     public void stopQuest() {
-//	if (questRunner != null && questRunner.isRunning()) {
+	if (questRunner != null && questRunner.isRunning()) {
 	    statusLabel.setText("Stopping...");
-//	    questRunner.stop();
+	    questRunner.stop();
 	    statusLabel.setText("Stopped");
-//	}
+	}
     }
 
     /**
@@ -176,29 +228,33 @@ public class Player extends javax.swing.JFrame {
     }
 
     public void closeWindow() {
-//	if (questRunner == null || (questRunner != null && !questRunner.isRunning()) || (questRunner != null && questRunner.isRunning() && JOptionPane.showConfirmDialog(this, "A quest is currently running. Are you sure you want to quit?") == JOptionPane.YES_OPTION)) {
+	if (questRunner == null || (questRunner != null && !questRunner.isRunning()) || (questRunner != null && questRunner.isRunning()  && JOptionPane.showConfirmDialog(this, "A quest is currently running. Are you sure you want to quit?") == JOptionPane.YES_OPTION)) {
 	    stopQuest();
 	    WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
 	    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
 	    setVisible(false);
 	    dispose();
 	    System.exit(0);
-//	} else {
+	} else {
 	    return;
-//	}
+	}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel drawPanel;
+    private org.jelda.player.DrawPane drawPanel;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JFileChooser loadQuestFileChooser;
     private javax.swing.JMenuItem loadQuestMenuItem;
+    private javax.swing.JMenuItem pauseMenuItem;
     private javax.swing.JMenuItem quitMenuItem;
+    private javax.swing.JMenuItem resumeMenuItem;
+    private javax.swing.JMenuItem startMenuItem;
     private javax.swing.JLabel staticStatusText;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JMenuItem stopQuestMenuItem;
+    private javax.swing.JMenuItem stopMenuItem;
     // End of variables declaration//GEN-END:variables
 
 

@@ -30,7 +30,7 @@ public class RoomPool extends Pool<Room> {
 	}
 
 	@Override
-	public Room load(String id) {
+	protected Room load(String id) {
 		Room room = new Room(new File(loadDir, idToFilenameMap.get(id)));
 		return room;
 	}
@@ -45,6 +45,10 @@ public class RoomPool extends Pool<Room> {
 	
 	public String getIDList() {
 		return manifest.getRoomProperty(RoomManifest.IDLIST);
+	}
+	
+	public String getStartRoom() {
+		return manifest.getRoomProperty(RoomManifest.STARTROOM);
 	}
 
 }

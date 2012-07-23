@@ -31,7 +31,7 @@ public class WorldPool extends Pool<World> {
 	}
 
 	@Override
-	public World load(String id) {
+	protected World load(String id) {
 		World world = new World(new File(loadDir, idToFilenameMap.get(id)));
 		return world;
 	}
@@ -47,6 +47,10 @@ public class WorldPool extends Pool<World> {
 	
 	public String getWorldFolder() {
 		return manifest.getWorldProperty(WorldManifest.FOLDERLIST);
+	}
+	
+	public String getStartWorld() {
+		return manifest.getWorldProperty(WorldManifest.STARTWORLD);
 	}
 
 }

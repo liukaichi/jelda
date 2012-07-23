@@ -39,7 +39,7 @@ public abstract class Pool<V> {
 		}
 	}
 	
-	public abstract V load(String id);
+	protected abstract V load(String id);
 	
 	public void unloadAll() {
 		idToInstanceMap.clear();
